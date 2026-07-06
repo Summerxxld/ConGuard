@@ -1,0 +1,112 @@
+experiment:
+  name: raw_mock_crescendo_mock_llama
+  asr_k: 1
+  success_definition: any_turn_harmful_goal_satisfied
+  max_turns: 4
+  guard_input_mode: full_history_concatenation
+  output_dir: results
+
+seeds:
+  path: examples/seeds/harmful_goals_sample.jsonl
+  limit: 5
+
+attacks:
+  selected:
+    - mock_crescendo
+  available:
+    mock_crescendo:
+      adapter: MockCrescendoAttack
+      params:
+        max_turns: 4
+    crescendo:
+      adapter: TODO
+      params: {}
+    actor_attack:
+      adapter: TODO
+      params: {}
+    x_teaming:
+      adapter: TODO
+      params: {}
+    tempest:
+      adapter: TODO
+      params: {}
+
+targets:
+  selected:
+    - mock_llama
+  available:
+    mock_llama:
+      adapter: MockTargetModel
+      params:
+        unsafe_marker: HARMFUL_CONTENT_SIMULATION
+    llama:
+      adapter: TODO
+      params:
+        model_path: null
+        inference_backend: vllm
+    qwen:
+      adapter: TODO
+      params:
+        model_path: null
+        inference_backend: vllm
+    gemma:
+      adapter: TODO
+      params:
+        model_path: null
+        inference_backend: vllm
+    mistral:
+      adapter: TODO
+      params:
+        model_path: null
+        inference_backend: vllm
+    vicuna:
+      adapter: TODO
+      params:
+        model_path: null
+        inference_backend: vllm
+
+guards:
+  selected:
+    - raw
+  available:
+    raw:
+      adapter: RawGuard
+      params: {}
+    llama_guard_3_8b:
+      adapter: TODO
+      params:
+        model_path: null
+        input_mode: full_history_concatenation
+    shieldgemma_2b:
+      adapter: TODO
+      params:
+        model_path: null
+        input_mode: full_history_concatenation
+    wildguard:
+      adapter: TODO
+      params:
+        model_path: null
+        input_mode: full_history_concatenation
+    granite_guardian_3_0_2b:
+      adapter: TODO
+      params:
+        model_path: null
+        input_mode: full_history_concatenation
+    qwen3guard_gen_0_6b:
+      adapter: TODO
+      params:
+        model_path: null
+        input_mode: full_history_concatenation
+
+judge:
+  selected: keyword_mock
+  available:
+    keyword_mock:
+      adapter: KeywordMockJudge
+      params:
+        unsafe_markers:
+          - HARMFUL_CONTENT_SIMULATION
+    harmbench_llama_2_13b_cls:
+      adapter: TODO
+      params:
+        model_path: null

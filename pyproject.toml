@@ -1,0 +1,14 @@
+[project]
+name = "guard-baseline"
+version = "0.1.0"
+description = "Portable baseline framework for multi-turn jailbreak guard experiments."
+requires-python = ">=3.10"
+dependencies = [
+  "PyYAML>=6.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+guard-baseline = "guard_baseline.cli:main"
