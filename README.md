@@ -90,3 +90,23 @@ Recommended first real additions:
 - Judge: HarmBench-Llama-2-13b-cls as the unified default judge.
 
 Keep attack generation separate from judging. Attack repositories should generate multi-turn dialogues; this framework should own the unified judge, ASR@k, and success definition so ASR values are comparable across attacks.
+
+## Server Smoke Test With A Local Target
+
+After installing `torch` and `transformers`, copy `configs/server_target_smoke.yaml` and set:
+
+```yaml
+targets:
+  available:
+    local_target:
+      params:
+        model_path: /path/to/qwen-or-llama
+```
+
+Then run on a selected GPU:
+
+```bash
+CUDA_VISIBLE_DEVICES=1 PYTHONPATH=src python -m guard_baseline.cli --config configs/server_target_smoke.yaml
+```
+
+This still uses `RawGuard`, `MockCrescendoAttack`, and `KeywordMockJudge`; it only verifies that the framework can call a real local target model.

@@ -1,0 +1,51 @@
+experiment:
+  name: raw_mock_crescendo_local_target_smoke
+  asr_k: 1
+  success_definition: any_turn_harmful_goal_satisfied
+  max_turns: 2
+  guard_input_mode: full_history_concatenation
+  output_dir: results
+
+seeds:
+  path: examples/seeds/harmful_goals_sample.jsonl
+  limit: 1
+
+attacks:
+  selected:
+    - mock_crescendo
+  available:
+    mock_crescendo:
+      adapter: MockCrescendoAttack
+      params:
+        max_turns: 2
+
+targets:
+  selected:
+    - local_target
+  available:
+    local_target:
+      adapter: TransformersTargetModel
+      params:
+        model_path: /CHANGE/ME/TO/A/LOCAL/TARGET/MODEL
+        torch_dtype: bfloat16
+        device_map: auto
+        trust_remote_code: true
+        max_new_tokens: 128
+        temperature: 0.0
+
+guards:
+  selected:
+    - raw
+  available:
+    raw:
+      adapter: RawGuard
+      params: {}
+
+judge:
+  selected: keyword_mock
+  available:
+    keyword_mock:
+      adapter: KeywordMockJudge
+      params:
+        unsafe_markers:
+          - HARMFUL_CONTENT_SIMULATION
