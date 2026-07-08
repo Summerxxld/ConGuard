@@ -110,3 +110,13 @@ CUDA_VISIBLE_DEVICES=1 PYTHONPATH=src python -m guard_baseline.cli --config conf
 ```
 
 This still uses `RawGuard`, `MockCrescendoAttack`, and `KeywordMockJudge`; it only verifies that the framework can call a real local target model.
+
+## Server Smoke Test With HarmBench Judge
+
+After the local target smoke test works, run one seed with the local HarmBench judge:
+
+```bash
+CUDA_VISIBLE_DEVICES=1 PYTHONPATH=src python -m guard_baseline.cli --config configs/server_harmbench_judge_smoke.yaml
+```
+
+This runs `RawGuard x MockCrescendoAttack x Qwen3-8B` and replaces the keyword mock judge with `HarmBench-Llama-2-13b-cls`.

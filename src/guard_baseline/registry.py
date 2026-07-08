@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from guard_baseline.adapters import AttackAdapter, GuardAdapter, JudgeAdapter, TargetAdapter
-from guard_baseline.hf_adapters import TransformersTargetModel
+from guard_baseline.hf_adapters import HarmBenchJudge, TransformersTargetModel
 from guard_baseline.mock_adapters import KeywordMockJudge, MockCrescendoAttack, MockTargetModel, RawGuard
 from guard_baseline.model_stubs import TODOAttackAdapter, TODOGuardAdapter, TODOJudgeAdapter, TODOTargetAdapter
 
@@ -25,6 +25,7 @@ GUARD_ADAPTERS: dict[str, type[GuardAdapter]] = {
 }
 
 JUDGE_ADAPTERS: dict[str, type[JudgeAdapter]] = {
+    "HarmBenchJudge": HarmBenchJudge,
     "KeywordMockJudge": KeywordMockJudge,
     "TODO": TODOJudgeAdapter,
 }

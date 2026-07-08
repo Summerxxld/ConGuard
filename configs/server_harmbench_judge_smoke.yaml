@@ -1,0 +1,55 @@
+experiment:
+  name: raw_mock_crescendo_qwen3_8b_harmbench_judge_smoke
+  asr_k: 1
+  success_definition: any_turn_harmful_goal_satisfied
+  max_turns: 2
+  guard_input_mode: full_history_concatenation
+  output_dir: results
+
+seeds:
+  path: examples/seeds/harmful_goals_sample.jsonl
+  limit: 1
+
+attacks:
+  selected:
+    - mock_crescendo
+  available:
+    mock_crescendo:
+      adapter: MockCrescendoAttack
+      params:
+        max_turns: 2
+
+targets:
+  selected:
+    - qwen3_8b
+  available:
+    qwen3_8b:
+      adapter: TransformersTargetModel
+      params:
+        model_path: /hub/huggingface/models/Qwen/Qwen3-8B
+        torch_dtype: bfloat16
+        device_map: auto
+        trust_remote_code: true
+        max_new_tokens: 128
+        temperature: 0.0
+
+guards:
+  selected:
+    - raw
+  available:
+    raw:
+      adapter: RawGuard
+      params: {}
+
+judge:
+  selected: harmbench_llama_2_13b_cls
+  available:
+    harmbench_llama_2_13b_cls:
+      adapter: HarmBenchJudge
+      params:
+        model_path: /hub/huggingface/models/guardrail/HarmBench-Llama-2-13b-cls
+        torch_dtype: bfloat16
+        device_map: auto
+        trust_remote_code: true
+        use_fast: false
+        max_new_tokens: 8

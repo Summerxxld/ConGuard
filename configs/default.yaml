@@ -107,6 +107,11 @@ judge:
         unsafe_markers:
           - HARMFUL_CONTENT_SIMULATION
     harmbench_llama_2_13b_cls:
-      adapter: TODO
+      adapter: HarmBenchJudge
       params:
-        model_path: null
+        model_path: /hub/huggingface/models/guardrail/HarmBench-Llama-2-13b-cls
+        torch_dtype: bfloat16
+        device_map: auto
+        trust_remote_code: true
+        use_fast: false
+        max_new_tokens: 8
